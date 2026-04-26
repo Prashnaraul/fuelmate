@@ -33,40 +33,32 @@ if (!data) {
 
   if (data.goal === "lose") {
     calories -= 300;
-    goalMessage =
-      "Because your goal is weight loss, FuelMate creates a small calorie deficit to support gradual progress.";
+    goalMessage = "Your goal is weight loss, so this plan creates a small calorie deficit.";
   } else if (data.goal === "gain") {
     calories += 300;
-    goalMessage =
-      "Because your goal is muscle gain, FuelMate adds extra calories to support recovery and growth.";
+    goalMessage = "Your goal is muscle gain, so this plan adds extra calories for recovery.";
   } else {
-    goalMessage =
-      "Because your goal is maintenance, FuelMate keeps your calories close to your daily energy needs.";
+    goalMessage = "Your goal is maintenance, so this plan supports steady energy.";
   }
 
   protein = Math.round(weight * 1.8);
   fat = Math.round((calories * 0.25) / 9);
   carbs = Math.round((calories - (protein * 4 + fat * 9)) / 4);
-
   waterLiters = ((weight * 35) / 1000).toFixed(1);
 
   let bmiNote = "";
 
   if (bmi >= 25 && bmi < 30) {
     score -= 15;
-    bmiNote =
-      "⚠️ Your BMI suggests overweight. A balanced calorie deficit, more protein, and consistent movement may help.";
+    bmiNote = "⚠️ BMI suggests overweight range. Focus on balanced portions and steady movement.";
   } else if (bmi >= 30) {
     score -= 25;
-    bmiNote =
-      "⚠️ Your BMI suggests obesity range. Focus on safer gradual changes, balanced meals, hydration, sleep, and professional guidance if needed.";
+    bmiNote = "⚠️ BMI suggests obesity range. Consider gradual changes and professional guidance if needed.";
   } else if (bmi < 18.5) {
     score -= 15;
-    bmiNote =
-      "⚠️ Your BMI suggests underweight. Increasing calories and protein may help support energy and recovery.";
+    bmiNote = "⚠️ BMI suggests underweight range. Increasing calories and protein may help.";
   } else {
-    bmiNote =
-      "✅ Your BMI is within the normal range based on this estimate.";
+    bmiNote = "✅ BMI is within normal range based on this estimate.";
   }
 
   if (calories < 1400) score -= 25;
@@ -74,53 +66,41 @@ if (!data) {
   if (protein < weight * 1.2) score -= 20;
   if (fat < 30) score -= 10;
   if (carbs < 100) score -= 10;
-
   if (score < 0) score = 0;
 
   const scoreMessage =
-    score >= 85
-      ? "Strong balance"
-      : score >= 65
-      ? "Good start, but can improve"
-      : "Needs attention";
+    score >= 85 ? "Strong balance" :
+    score >= 65 ? "Good start, but can improve" :
+    "Needs attention";
 
   let riskText = "";
 
   if (calories < 1400) {
-    riskText +=
-      "⚠️ Your calorie target is very low. This may cause tiredness, dizziness, or low focus.<br>";
+    riskText += "⚠️ Very low calories may reduce energy and focus.<br>";
   }
 
   if (protein < weight * 1.2) {
-    riskText +=
-      "⚠️ Your protein may be low. Low protein can make recovery harder and may leave you hungry sooner.<br>";
+    riskText += "⚠️ Low protein may affect fullness and recovery.<br>";
   }
 
   if (bmi >= 25) {
-    riskText +=
-      "⚠️ BMI suggests extra weight risk. Focus on balanced meals, portion control, hydration, sleep, and steady movement.<br>";
+    riskText += "⚠️ BMI suggests extra weight risk. Focus on portions, water, sleep, and steady movement.<br>";
   }
 
   if (riskText === "") {
-    riskText =
-      "✅ No major risk detected from this basic estimate. Your plan looks reasonable based on your inputs.";
+    riskText = "✅ No major risk detected from this basic estimate.";
   }
 
   results.innerHTML = `
     <div class="score-box">
       <h2>⭐ Health Score: ${score}/100</h2>
       <p>${scoreMessage}</p>
-      <p>
-        This score considers calories, macros, and BMI estimate to give a quick wellness snapshot.
-      </p>
+      <p>This score considers calories, macros, and BMI estimate.</p>
     </div>
 
     <div class="result-box">
       <h2>🔥 ${calories} Calories/day</h2>
-      <p>
-        Calories are your body’s daily fuel. You need them for walking, studying,
-        working, exercising, and basic body functions.
-      </p>
+      <p>${goalMessage}</p>
 
       <p><strong>📏 BMI:</strong> ${bmi.toFixed(1)}</p>
       <p>${bmiNote}</p>
@@ -128,26 +108,17 @@ if (!data) {
       <div class="macro-education">
         <div>
           <h3>💪 Protein: ${protein}g</h3>
-          <p>
-            Protein helps repair muscles and keeps you full.
-            Good sources: eggs, chicken, fish, yogurt, paneer, tofu, beans, lentils.
-          </p>
+          <p>Protein helps repair muscles and keeps you full. Sources: eggs, chicken, fish, tofu, beans, yogurt, lentils.</p>
         </div>
 
         <div>
           <h3>🍚 Carbs: ${carbs}g</h3>
-          <p>
-            Carbs are your main energy source.
-            Good sources: rice, roti, oats, potatoes, fruits, bread, noodles, tortillas.
-          </p>
+          <p>Carbs are your main energy source. Sources: rice, roti, oats, potatoes, fruits, bread, noodles, tortillas.</p>
         </div>
 
         <div>
-          <h3>🥑 Fats: ${fat}g</h3>
-          <p>
-            Fats support hormones, brain health, and long-lasting energy.
-            Good sources: nuts, peanuts, avocado, seeds, eggs, milk, cheese, and healthy oils.
-          </p>
+          <h3>🥑 Fat: ${fat}g</h3>
+          <p>Fats support brain health and hormones. Sources: nuts, avocado, eggs, milk, cheese, seeds, healthy oils.</p>
         </div>
       </div>
     </div>
@@ -162,31 +133,15 @@ if (!data) {
       <p id="waterGoal"></p>
     </div>
 
-    <div class="explain-box">
-      <h3>🧠 Decision Explanation</h3>
-      <p>${goalMessage}</p>
-      <p>
-        FuelMate estimates your needs using age, height, weight, movement level, and goal.
-        Instead of only showing numbers, it connects those numbers to real food choices.
-      </p>
-    </div>
-
     <div class="culture-box">
       <h3>🌍 Culturally Adaptive Nutrition</h3>
       <p>
-        FuelMate adapts to different dietary styles instead of forcing one “perfect” diet.
-        It supports South Asian, East Asian, Latino/Hispanic, Middle Eastern,
-        African/Caribbean, and Western/American food patterns.
-      </p>
-      <p>
-        <strong>Key idea:</strong> Better nutrition is not about changing your culture,
-        but improving balance within it.
+        FuelMate supports diverse food styles instead of forcing one perfect diet.
+        Better nutrition is about improving balance within familiar eating habits.
       </p>
     </div>
 
-    <p class="note">
-      Note: FuelMate is for educational guidance only, not medical diagnosis.
-    </p>
+    <p class="note">FuelMate is educational guidance, not medical diagnosis.</p>
   `;
 
   createChart();
@@ -195,24 +150,17 @@ if (!data) {
 
 function createChart() {
   const chartElement = document.getElementById("macroChart");
-
   if (!chartElement) return;
 
   new Chart(chartElement, {
     type: "doughnut",
     data: {
       labels: ["Protein", "Carbs", "Fat"],
-      datasets: [
-        {
-          data: [protein, carbs, fat]
-        }
-      ]
+      datasets: [{ data: [protein, carbs, fat] }]
     },
     options: {
       plugins: {
-        legend: {
-          position: "bottom"
-        }
+        legend: { position: "bottom" }
       }
     }
   });
@@ -221,7 +169,6 @@ function createChart() {
 function waterReminder() {
   const box = document.getElementById("waterGoal");
   const hour = new Date().getHours();
-
   if (!box) return;
 
   let reminder = "";
@@ -231,12 +178,11 @@ function waterReminder() {
   } else if (hour < 18) {
     reminder = "Try to reach about 70% of your water goal by evening.";
   } else {
-    reminder =
-      "Finish your remaining water slowly, but avoid drinking too much right before sleep.";
+    reminder = "Finish slowly, but avoid drinking too much right before sleep.";
   }
 
   box.innerHTML = `
-    Your estimated water goal is <strong>${waterLiters} liters/day</strong>.<br>
+    Estimated goal: <strong>${waterLiters} liters/day</strong><br>
     ${reminder}
   `;
 }
@@ -245,39 +191,21 @@ function mealReminder() {
   const hour = new Date().getHours();
   const minute = new Date().getMinutes();
   const box = document.getElementById("mealReminder");
-
   if (!box) return;
 
-  const currentTime = `${hour % 12 || 12}:${minute
-    .toString()
-    .padStart(2, "0")} ${hour >= 12 ? "PM" : "AM"}`;
+  const currentTime = `${hour % 12 || 12}:${minute.toString().padStart(2, "0")} ${hour >= 12 ? "PM" : "AM"}`;
 
   if (hour >= 7 && hour < 10) {
-    box.innerHTML = `
-      <strong>Current time: ${currentTime}</strong><br>
-      🌅 Breakfast window: 7:00 AM – 10:00 AM<br>
-      Choose a balanced breakfast with protein + carbs.
-    `;
+    box.innerHTML = `<strong>Current time: ${currentTime}</strong><br>🌅 Breakfast window: 7:00 AM – 10:00 AM`;
   } else if (hour >= 12 && hour < 15) {
-    box.innerHTML = `
-      <strong>Current time: ${currentTime}</strong><br>
-      🍛 Lunch window: 12:00 PM – 2:30 PM<br>
-      Try a balanced plate with carbs, protein, and vegetables.
-    `;
+    box.innerHTML = `<strong>Current time: ${currentTime}</strong><br>🍛 Lunch window: 12:00 PM – 2:30 PM`;
   } else if (hour >= 18 && hour < 21) {
-    box.innerHTML = `
-      <strong>Current time: ${currentTime}</strong><br>
-      🌙 Dinner window: 6:00 PM – 9:00 PM<br>
-      Choose a filling but not-too-heavy dinner with protein and vegetables.
-    `;
+    box.innerHTML = `<strong>Current time: ${currentTime}</strong><br>🌙 Dinner window: 6:00 PM – 9:00 PM`;
   } else {
-    box.innerHTML = `
-      <strong>Current time: ${currentTime}</strong><br>
-      🍌 Snack window<br>
-      Try fruit, yogurt, peanuts, roasted chickpeas, or a light balanced snack.
-    `;
+    box.innerHTML = `<strong>Current time: ${currentTime}</strong><br>🍌 Snack / hydration window`;
   }
 }
+
 function sleepReminder() {
   const hour = new Date().getHours();
   const minute = new Date().getMinutes();
@@ -322,6 +250,7 @@ function sleepReminder() {
     `;
   }
 }
+
 function findFoodNearMe() {
   const choice = document.getElementById("eatOutChoice").value;
   const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(choice)}`;
