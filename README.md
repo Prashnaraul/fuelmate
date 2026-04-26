@@ -91,7 +91,7 @@ FuelMate uses a simple frontend architecture:
 - AI-based food recognition and recommendations
 - Real-time location-based restaurant suggestions
 - Weekly personalized meal plans
-
+demo link: https://1drv.ms/v/c/2248fa6ff7c9e9b8/IQD7rceyEXaiTKATwfNXduLFAX0IDv1AKFnFb4PP_kk-am8?e=0GviZP
 
 ## 🛠 Setup Instructions
 
