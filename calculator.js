@@ -278,7 +278,6 @@ function mealReminder() {
     `;
   }
 }
-
 function sleepReminder() {
   const hour = new Date().getHours();
   const minute = new Date().getMinutes();
@@ -286,37 +285,43 @@ function sleepReminder() {
 
   if (!box) return;
 
+  const data = JSON.parse(localStorage.getItem("nutritionUser"));
+  const age = Number(data.age);
+
   const currentTime = `${hour % 12 || 12}:${minute
     .toString()
     .padStart(2, "0")} ${hour >= 12 ? "PM" : "AM"}`;
 
+  let sleepNeed = "";
+  let sleepFact = "";
+
+  if (age >= 18 && age <= 25) {
+    sleepNeed = "7–9 hours";
+    sleepFact = "Young adults need more sleep for brain function, memory, and recovery.";
+  } else if (age >= 26 && age <= 64) {
+    sleepNeed = "7–8 hours";
+    sleepFact = "Adults need consistent sleep to maintain energy, focus, and metabolism.";
+  } else {
+    sleepNeed = "7–8 hours";
+    sleepFact = "Sleep supports overall health, immunity, and mental clarity.";
+  }
+
   if (hour >= 21 || hour < 5) {
     box.innerHTML = `
       <strong>Current time: ${currentTime}</strong><br>
-      🌙 Sleep window: 10:00 PM – 6:00 AM<br>
-      Reduce screen time, avoid heavy meals, and prepare for rest.
-    `;
-  } else if (hour >= 5 && hour < 8) {
-    box.innerHTML = `
-      <strong>Current time: ${currentTime}</strong><br>
-      🌅 Wake-up window: 6:00 AM – 8:00 AM<br>
-      Drink water, move lightly, and eat breakfast within a few hours.
-    `;
-  } else if (hour >= 15 && hour < 18) {
-    box.innerHTML = `
-      <strong>Current time: ${currentTime}</strong><br>
-      ☕ Afternoon reminder<br>
-      Avoid too much caffeine now so your sleep is not disturbed later.
+      🌙 Ideal sleep window: 10:00 PM – 6:00 AM<br>
+      🛌 Recommended for your age: <strong>${sleepNeed}</strong><br>
+      💡 ${sleepFact}
     `;
   } else {
     box.innerHTML = `
       <strong>Current time: ${currentTime}</strong><br>
-      ✅ Sleep tip<br>
-      Keep a consistent bedtime and avoid very heavy meals close to sleep.
+      😴 Recommended sleep: <strong>${sleepNeed}</strong><br>
+      💡 ${sleepFact}<br>
+      Try to maintain a consistent sleep schedule.
     `;
   }
 }
-
 function findFoodNearMe() {
   const choice = document.getElementById("eatOutChoice").value;
   const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(choice)}`;
