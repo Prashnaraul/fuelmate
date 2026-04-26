@@ -2,41 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Result</title>
+  <title>Dashboard | FuelMate</title>
   <link rel="stylesheet" href="css/style.css">
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
 <div class="home">
-
   <div class="card result-card">
 
-    <h1>Your Plan</h1>
+    <p class="badge">Wellness Dashboard</p>
+    <h1>Your FuelMate Plan</h1>
 
     <div id="results"></div>
 
     <canvas id="macroChart"></canvas>
 
-    <h2>⏰ Meal Reminder</h2>
-    <p id="mealReminder"></p>
+    <div class="explain-box">
+      <h3>⏰ Meal Timing</h3>
+      <p id="mealReminder"></p>
+    </div>
 
-    <h2>🍽 What should I eat?</h2>
+    <div class="sleep-box">
+      <h3>😴 Sleep Guidance</h3>
+      <p id="sleepReminder"></p>
+    </div>
 
-    <button onclick="eatNow('hungry')">Hungry</button>
-    <button onclick="eatNow('workout')">Workout</button>
-    <button onclick="eatNow('energy')">Low Energy</button>
+    <div class="eatout-box">
+      <h3>🍽 Eating Out Guidance</h3>
+      <p>Choose a cuisine style to find nearby options.</p>
 
-    <div id="eatSuggestion"></div>
+      <select id="eatOutChoice">
+        <option value="healthy chinese food near me">Chinese / East Asian</option>
+        <option value="healthy indian food near me">Indian / South Asian</option>
+        <option value="healthy mexican food near me">Mexican / Latino</option>
+        <option value="healthy mediterranean food near me">Mediterranean / Middle Eastern</option>
+        <option value="healthy african food near me">African / Caribbean</option>
+        <option value="healthy american food near me">American / Western</option>
+      </select>
 
-    <button onclick="goBack()">Back</button>
+      <button onclick="findFoodNearMe()">Find Options Near Me</button>
+    </div>
+
+    <button onclick="window.location.href='food.html'">What Should I Eat?</button>
+    <button class="back-btn" onclick="goBack()">Start Over</button>
 
   </div>
-
 </div>
 
 <script src="js/calculator.js"></script>
-
 </body>
 </html>
