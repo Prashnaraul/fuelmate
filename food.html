@@ -2,30 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>What Should I Eat?</title>
+  <title>Meal Guide | FuelMate</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
 <div class="home">
-  <div class="card food-page-card">
+  <div class="card result-card">
 
-    <p class="badge">🍽 Smart Food Guide</p>
-    <h1>What should I eat?</h1>
-    <p>Choose your situation and FuelMate will suggest meals that fit your body and goal.</p>
+    <p class="badge">Smart Meal Planner</p>
+    <h1>Your Daily Meal Guide</h1>
 
-    <div class="option-grid">
-      <button onclick="showMeals('hungry')">I’m Hungry</button>
-      <button onclick="showMeals('workout')">Just Worked Out</button>
-      <button onclick="showMeals('energy')">Low Energy</button>
-      <button onclick="showMeals('budget')">Cheap Meal</button>
-      <button onclick="showMeals('breakfast')">Breakfast</button>
-      <button onclick="showMeals('dinner')">Dinner</button>
+    <p>
+      Choose your food style and goal. FuelMate gives breakfast, lunch,
+      dinner, snack ideas, and recipe links.
+    </p>
+
+    <div class="decision-box">
+      <label>Food style / region</label>
+      <select id="region">
+        <option value="southasian">South Asian</option>
+        <option value="eastasian">East Asian</option>
+        <option value="latin">Latino / Hispanic</option>
+        <option value="middleeastern">Middle Eastern / Mediterranean</option>
+        <option value="africancaribbean">African / Caribbean</option>
+        <option value="western">Western / American</option>
+      </select>
+
+      <label>Your goal</label>
+      <select id="goal">
+        <option value="maintain">Maintain</option>
+        <option value="cut">Cut / Lose Weight</option>
+        <option value="gain">Gain Muscle</option>
+      </select>
+
+      <button onclick="showMealPlan()">Generate My Meal Plan</button>
     </div>
 
-    <div id="mealResults"></div>
+    <div id="mealPlan"></div>
 
-    <button class="back-btn" onclick="window.location.href='result.html'">Back to Plan</button>
+    <div class="analyzer-box">
+      <h2>🔎 Food Intake Analyzer</h2>
+      <p>Type a food and FuelMate will explain its nutrition role.</p>
+
+      <input type="text" id="foodInput" placeholder="Example: pizza, fish, rice, egg">
+
+      <button onclick="analyzeFood()">Analyze My Food</button>
+
+      <div id="foodAnalysis"></div>
+      <canvas id="foodChart"></canvas>
+    </div>
+
+    <button class="back-btn" onclick="window.location.href='result.html'">
+      Back to Dashboard
+    </button>
 
   </div>
 </div>
